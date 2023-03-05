@@ -1,1 +1,4 @@
 [Bb]uild/
+compile_flags.txt
+.vscode/
+.cache/
