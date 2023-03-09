@@ -16,6 +16,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
+float mixValue = 0.2;
+
 int main() {
     // Load GLFW and Create a Window
     glfwInit();
@@ -129,6 +131,8 @@ int main() {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
+        ourShader.setFloat("mixValue", mixValue);
+
         ourShader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -152,6 +156,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
+    } else if (glfwGetKey(window, GLFW_KEY_UP)) {
+        mixValue = std::min(1.0, mixValue + 0.01);
+    } else if (glfwGetKey(window, GLFW_KEY_DOWN)) {
+        mixValue = std::max(0.0, mixValue - 0.01);
     }
 }
 
